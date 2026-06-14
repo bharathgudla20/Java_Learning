@@ -28,6 +28,9 @@ switch (day) {
 for (int i = 0; i < 5; i++) { }          // when count is known
 while (condition) { }                      // when count is unknown
 do { } while (condition);                  // runs at least once
+
+## Enhanced for loop:
+    The enhanced for loop in Java (also known as the for-each loop) is a compact syntax introduced in Java 5 used to iterate sequentially through arrays or collections.
 for (String s : list) { }                 // enhanced for — iterating collections
 ```
 
