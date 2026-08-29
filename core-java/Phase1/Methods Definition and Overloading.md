@@ -56,6 +56,42 @@ class Calculator {
 
 ---
 
+### 5 — varargs (variable arguments)
+Pass any number of arguments — treated as array inside
+Sometimes you don't know how many arguments someone will pass. Varargs lets you accept any number using ... syntax. Java treats it as an array inside the method.
+// varargs syntax: type... name
+int sum(int... nums) {          // nums is int[] inside
+    int total = 0;
+    for (int n : nums) total += n;
+    return total;
+}
+
+// You can call it with any number of args:
+sum(1);              // 1
+sum(1, 2);           // 3
+sum(1, 2, 3, 4, 5);  // 15
+sum();               // 0 — even zero args works!
+
+// Rules:
+// 1. Only ONE varargs per method
+// 2. varargs must be the LAST parameter
+int print(String label, int... nums)  // valid
+int print(int... nums, String label)  // COMPILE ERROR
+Varargs is just syntactic sugar for an array. int... nums is exactly the same as int[] nums inside the method body — but the caller doesn't need to create an array.
+
+
+### 6 — Variable scope
+Where a variable lives — and where it dies
+Local variable
+Declared inside a method or block. Born when the block starts, dies when it ends. Must be initialised before use. No default value.
+void method() { int x = 5; } — x dies when method ends.
+Instance variable
+Declared inside a class but outside methods. Each object gets its own copy. Has a default value (0, null, false). Lives as long as the object lives.
+class Dog { String name; } — each Dog has its own name.
+Static (class) variable
+Declared with static keyword. Shared across ALL objects of the class. Only one copy exists.
+class Dog { static int count = 0; } — all dogs share the same count.
+
 ## Part 3: TCS to Product-Company Level Interview Questions
 
 Q1: Why do we need Method Overloading? Why not separate names like `multiplyTwo()` and `multiplyThree()`?

@@ -116,11 +116,11 @@ for (char c : s.toCharArray()) {
 System.out.println(result);   // "Bhrat"
 ```
 
-In Java, both String.valueOf() and toString() convert objects or data into strings, but they handle null values differently.
+### In Java, both String.valueOf() and toString() convert objects or data into strings, but they handle null values differently.
 
 The primary rule is: Use String.valueOf() when your data might be null and you want to avoid crashes. Use toString() when you are 100% certain the data exists.The Main DifferenceString.valueOf(object) is a safe utility method. If the object is null, it smoothly returns the text "null" instead of crashing.object.toString() is a method called directly on an object. If that object is null, your program will instantly crash with a NullPointerException.
 
-can we use to int and float date type as toString?
+### can we use to int and float date type as toString?
 No, you cannot call .toString() directly on basic int or float data types.In Java, int and float are primitive data types, not objects. Only objects have methods you can call with a dot (.).
 
 However, you have a couple of easy ways to convert them to text.Option 1: Use Wrapper Classes (Best Practice)Java has special object versions of primitives called Wrapper Classes (Integer and Float). These classes have built-in tools to convert your numbers.For integers: Use Integer.toString(myInt)For floats: Use Float.toString(myFloat)javaint age = 25;

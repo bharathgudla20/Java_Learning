@@ -44,6 +44,28 @@ Use coordinate compression plus a Fenwick Tree (Binary Indexed Tree) to count th
 ## Java Implementation
 
 ```java
+
+class Solution {
+    public int countMajoritySubarrays(int[] nums, int target) {
+        int ans=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            HashMap<Integer,Integer>mp=new HashMap<>();
+            for(int j=i;j<nums.length;j++)
+            {
+                mp.put(nums[j],mp.getOrDefault(nums[j],0)+1);
+                if(mp.containsKey(target)){
+                if(mp.get(target)>(j-i+1)/2)
+                ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+-------solution 2:
+
 import java.util.Arrays;
 
 class Solution {

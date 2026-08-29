@@ -29,6 +29,19 @@ Output: 0
 ---
 
 ## Java Solution
+Forming the word “balloon” only requires us to count the occurrences of the characters:
+
+“a”, “b”, “l”, “o”, and “n” in the text string.
+Since each “balloon” needs two “l 
+′
+ s” and two “o 
+′
+ s”:
+
+To find the possible word “balloon” instances we can form,
+We divide the counts of “l” and “o” by 2.
+we find the min occurence and that will be the answer
+
 
 ```java
 class Solution {

@@ -25,8 +25,33 @@ Input: `s = "abc"`
 Output: `1`
 
 ---
+## Brute force
 
-## Approach
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int ans=0;
+        for(int i=0;i<s.length();i++)
+        {
+            StringBuffer abc=new StringBuffer();
+            for(int j=i;j<s.length();j++)
+            {
+                if(abc.indexOf(String.valueOf(s.charAt(j)))==-1)
+                abc.append(s.charAt(j));
+                char ch[]=abc.toString().toCharArray();
+                Arrays.sort(ch);
+                abc.setLength(0);
+                abc.append(ch);
+                System.out.println(abc);
+                if(abc.toString().equals("abc")){
+                ans=ans+s.length()-j;
+                break;
+                }
+            }
+        }
+        return ans;
+    }
+}
+## Optimal Approach
 
 A substring is valid if it contains all three characters: `'a'`, `'b'`, and `'c'`.
 

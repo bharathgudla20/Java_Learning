@@ -43,6 +43,7 @@ dog1.bark();   // Bruno says: Woof!
 dog2.bark();   // Max says: Woof!
 ```
 
+
 ## 2 — What happens when you write `new Dog()`
 
 4 things happen behind the scenes:
@@ -63,6 +64,10 @@ dog2.bark();   // Max says: Woof!
 4. Reference returned
    - A memory address (reference) is returned and stored in your variable.
    - `Dog dog1` holds the address, not the actual object.
+
+### what is difference between heap and stack memory in java?
+1. What goes into Stack Memory?Method Stack Frames: Every time your application invokes a method, the JVM pushes a new block called a "stack frame" onto the stack.Local Variables: It directly stores primitive values (int, double, boolean, etc.) assigned inside a method.Object References: It holds the memory address pointer (reference variable) that points to where the actual object lives on the heap.
+2. What goes into Heap Memory?Objects: Any time you use the new keyword (e.g., Car myCar = new Car();), the actual Car object structure gets initialized inside the heap.Instance Variables: All variables belonging to a class instance live alongside that object inside the heap, even if those variables are primitive types
 
 ## 3 — Constructors
 
