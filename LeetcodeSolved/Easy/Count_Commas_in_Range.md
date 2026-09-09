@@ -39,20 +39,16 @@ All numbers from 1 to 998 have fewer than four digits. Therefore, no commas are 
 
 ```java
 class Solution {
-    public int countCommas(int n) {
-        if(n<1000)
-        {
-            return 0;
+    public long countCommas(long n) {
+        long commaSum = 0;
+        long biggest = 999;
+
+        while (n > biggest) {
+            commaSum += n - biggest;
+            biggest = biggest * 1000 + 999;
         }
-        if(n<10000)
-        {
-            return n-999;
-        }
-        if(n<100000)
-        {
-            return 9999-999+(n-9999);
-        }
-        return 99001;
+
+        return commaSum;
     }
 }
 ```
