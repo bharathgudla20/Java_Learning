@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sign in | Launchpad</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js" defer></script><script src="login.js" defer></script>
+</head>
+<body>
+    <header><a class="brand" href="/">L<span>Launchpad</span></a><span class="tag">YOUR NEXT CHAPTER</span></header>
+    <main class="auth-layout">
+        <section class="intro"><p class="eyebrow">YOUR SEARCH. YOUR SPACE.</p><h1>A little structure.<br>A lot of possibility.</h1><p>Keep applications, interview notes, and progress together in your own private account.</p></section>
+        <section class="panel auth-panel">
+            <div class="auth-tabs"><button id="show-login" type="button" aria-pressed="true">Sign in</button><button id="show-register" type="button" class="secondary" aria-pressed="false">Create account</button></div>
+            <p id="auth-message" role="status" aria-live="polite"></p>
+            <form id="login-form">
+                <h2>Welcome back</h2>
+                <label>Email<input name="email" type="email" autocomplete="username" required maxlength="254"></label>
+                <label>Password<input name="password" type="password" autocomplete="current-password" required maxlength="72"></label>
+                <button type="submit">Sign in</button>
+            </form>
+            <form id="register-form" hidden>
+                <h2>Start your next chapter</h2>
+                <label>Email<input name="email" type="email" autocomplete="username" required maxlength="254"></label>
+                <label>Password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="72" required aria-describedby="password-help"></label>
+                <p id="password-help" class="muted">Use a unique password with at least 12 characters (at most 72 UTF-8 bytes). Email verification and password recovery are not available in this version.</p>
+                <button type="submit">Create account</button>
+            </form>
+            <p class="muted">Only sign up on a device you trust. Each account can access only its own applications.</p>
+        </section>
+    </main>
+</body>
+</html>

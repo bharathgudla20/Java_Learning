@@ -1,0 +1,18 @@
+# Free Java server. PostgreSQL is supplied separately by a Neon Free account.
+services:
+  - type: web
+    name: bharath-launchpad
+    runtime: docker
+    plan: free
+    rootDir: job-application-tracker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false

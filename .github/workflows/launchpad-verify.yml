@@ -1,0 +1,36 @@
+name: Verify Java project
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: job-application-tracker
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: tracker_test
+          POSTGRES_USER: tracker_test
+          POSTGRES_PASSWORD: temporary-test-password
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      POSTGRES_TEST_URL: jdbc:postgresql://localhost:5432/tracker_test
+      POSTGRES_TEST_USER: tracker_test
+      POSTGRES_TEST_PASSWORD: temporary-test-password
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: job-application-tracker/pom.xml
+      - run: mvn -B verify

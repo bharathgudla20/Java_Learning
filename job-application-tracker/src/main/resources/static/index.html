@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Launchpad | Job Application Tracker</title>
+  <link rel="stylesheet" href="styles.css"><script src="auth.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">L<span>Launchpad</span></a><div class="account-bar"><span id="account-email"></span><button id="logout" type="button" class="secondary" hidden>Sign out</button></div></header>
+  <main id="dashboard" hidden>
+    <section class="intro"><p class="eyebrow">ONE APPLICATION AT A TIME</p><h1>Keep your next move<br>moving forward.</h1><p>A simple space to organize your job search, track interviews, and celebrate progress.</p></section>
+    <section class="stats" aria-label="Application summary">
+      <article><span>Total applications</span><strong id="total">0</strong></article>
+      <article><span>Applied</span><strong id="applied">0</strong></article>
+      <article><span>Interviews</span><strong id="interview">0</strong></article>
+      <article><span>Offers</span><strong id="offer">0</strong></article>
+      <article><span>Rejected</span><strong id="rejected">0</strong></article>
+    </section>
+    <p id="message" role="status" aria-live="polite"></p>
+    <div class="workspace">
+      <section class="panel editor"><p class="eyebrow">BUILD MOMENTUM</p><h2 id="form-title">Add an application</h2>
+        <form id="application-form">
+          <label>Company<input name="company" required maxlength="100" placeholder="e.g. Acme Technologies"></label>
+          <label>Role<input name="role" required maxlength="100" placeholder="e.g. Junior Java Developer"></label>
+          <div class="pair"><label>Status<select name="status"><option value="APPLIED">Applied</option><option value="INTERVIEW">Interview</option><option value="OFFER">Offer</option><option value="REJECTED">Rejected</option></select></label><label>Applied on<input name="appliedOn" type="date" required></label></div>
+          <label>Notes <span class="muted">(optional)</span><textarea name="notes" maxlength="1000" rows="4" placeholder="Interview preparation, contacts, next steps..."></textarea></label>
+          <button id="save" type="submit">Save application</button><button id="cancel" type="button" class="secondary" hidden>Cancel editing</button>
+        </form>
+      </section>
+      <section class="panel applications"><div class="list-heading"><div><p class="eyebrow">YOUR PIPELINE</p><h2>Applications <span id="result-count"></span></h2></div><button id="refresh" class="secondary" type="button">Refresh</button></div>
+        <form id="filters" class="filters" role="search"><label>Search<input id="search" maxlength="100" placeholder="Company or role"></label><label>Status<select id="status"><option value="">All statuses</option><option>APPLIED</option><option>INTERVIEW</option><option>OFFER</option><option>REJECTED</option></select></label><button type="submit">Filter</button></form>
+        <p class="muted">Dashboard totals include all your applications. Filters apply to the list below.</p>
+        <div id="application-list" aria-live="polite"></div>
+      </section>
+    </div>
+    <footer>Built with Java + Spring Boot + SQL + HTML, CSS & JavaScript.<br>A learning project by Bharath.</footer>
+  </main>
+</body>
+</html>
