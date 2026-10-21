@@ -1,21 +1,24 @@
-# Verification - account-enabled v2
+# Verification - deployed v2
 
-Verified on 20-21 October 2026 with Java 21.0.11 and Maven 3.9.15.
+Verified on 20-21 October 2026.
 
-- Local Maven verify passed 13 API/security tests. The PostgreSQL test was skipped locally.
-- GitHub Actions subsequently passed all 14 tests, with zero failures/errors/skips.
-- PostgreSQL 16.15: Flyway successfully applied V1, Hibernate validated the schema,
-  and the owned-record persistence test passed.
-- CI run: https://github.com/bharathgudla20/Java_Learning/actions/runs/39635407530
-- Tested code commit: 544151928429543dfaf1f2449a78f8bfc346df86
+- Local build: 13 API/security tests passed; the PostgreSQL-only test was skipped locally.
+- GitHub Actions: all 14 tests passed with no failures, errors, or skips, including
+  Flyway V1, PostgreSQL 16.15 schema validation, and owned-record persistence.
+- CI: https://github.com/bharathgudla20/Java_Learning/actions/runs/39635407530
 - JavaScript syntax checks passed for app.js, auth.js, and login.js.
-- Real HTTP checks passed for registration, login, session cookies, CSRF protection,
-  account isolation, logout, and account/application persistence across restart.
-- Packaged frontend files and the SQL migration were compared with current source.
+- Local packaged-JAR HTTP checks passed, including persistence across restart.
+- Render built the Docker image, started the production profile, and reports the deployment live.
+- Public HTTPS checks passed for health, registration/login, CRUD/search, private
+  summary counts, CSRF rejection, cross-account access denial, and logout.
+- The public login page was inspected in the browser.
+- Synthetic application data was removed after the public test. Reserved example.com
+  verification accounts remain private.
+- Private environment files, node_modules, local database files, and deployment state
+  are excluded from the ZIP and source upload.
 
-The local HTTP check used a disposable database under target/accounts-http-test.
-Your original data folder was not uploaded or used by those tests.
+Live website: https://bharath-launchpad.onrender.com
+Deployed application-code commit: 2d6891d5766e4dfdcf7580a369feb5db2cab211e
 
-Remaining checks: the actual public deployment and browser interactions.
-Docker was unavailable locally, so a full local Docker build was not run.
-A successful build or GitHub test run does not mean that a public server is already live.
+Your original data folder was not uploaded. See DEPLOYED.md for the actual hosting steps,
+provider dashboard link, current limitations, and the future update flow.

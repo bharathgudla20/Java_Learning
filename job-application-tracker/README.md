@@ -1,5 +1,9 @@
 # Launchpad - Job Application Tracker v2
 
+**Live website:** https://bharath-launchpad.onrender.com
+
+Create your own account to use it. Read docs/DEPLOYED.md for the actual hosting steps.
+
 A beginner-friendly Java 21 / Spring Boot project with HTML, CSS, vanilla JavaScript,
 JPA, SQL, registration, session login, and private per-user applications.
 
@@ -25,6 +29,37 @@ java -jar target/job-application-tracker-2.0.0.jar
 
 A built JAR is a snapshot. Rebuild after changing source code. Retained v1 JARs run
 the older app, without these account features; the updated launcher uses v2.
+
+## Neon CLI workflow
+
+From this directory, initialize the requested Neon project and deploy its config:
+
+```powershell
+npx --yes --package=node@22 --package=neon@latest -- neon init -y --org-id org-calm-rain-83081628 --project-id delicate-butterfly-86535217 --branch production --services postgres
+npx --yes --package=node@22 --package=neon@latest -- neon deploy
+npm run build
+npm start
+```
+
+If port 8080 is occupied, run `$env:PORT='18080'; npm start`. With the app ready,
+run `./scripts/verify-neon.ps1 -BaseUrl http://127.0.0.1:18080` to verify HTTP health,
+registration, login, application CRUD/search, and logout. This check creates an
+empty verification account and removes its temporary application. See
+`docs/NEON_VERIFICATION.md` for the completed setup and verification outputs.
+
+The temporary Node 22 runtime meets the Neon skills installer's requirement.
+`npm run build` runs Maven `clean verify`, using MAVEN_HOME, PATH, or a cached Maven
+wrapper on Windows. JDK 21+ is required.
+
+`npm start` loads `.env` if present, otherwise `.env.local`, without overriding
+existing environment variables. It converts `DATABASE_URL` to JDBC settings for
+application queries and uses `DATABASE_URL_UNPOOLED` for Flyway migrations. The
+existing PostgreSQL JDBC driver, JPA, and Hikari pool are retained. Credentials
+stay in the ignored env file and the Java process environment.
+
+This launcher binds to localhost for HTTP testing. Hosted deployments should use
+the production profile and secure-cookie defaults described below. Neon deploys
+the database services; the Spring Boot web server still needs an app host.
 
 ## What changed in v2
 
