@@ -1,24 +1,21 @@
 # Verification - account-enabled v2
 
-Checks completed on 20-21 October 2026 using Java 21.0.11 and Maven 3.9.15:
+Verified on 20-21 October 2026 with Java 21.0.11 and Maven 3.9.15.
 
-- Maven verify succeeded: 13 integration/security tests passed, no failures or errors.
-- One PostgreSQL-specific migration test was skipped locally because a PostgreSQL test
-  server was not available. GitHub Actions supplies a disposable PostgreSQL 16 service.
-- Tests cover API lifecycle, filtering, validation, anonymous access, real session login,
-  password hashing, duplicate emails, CSRF, logout, and per-user record isolation.
+- Local Maven verify passed 13 API/security tests. The PostgreSQL test was skipped locally.
+- GitHub Actions subsequently passed all 14 tests, with zero failures/errors/skips.
+- PostgreSQL 16.15: Flyway successfully applied V1, Hibernate validated the schema,
+  and the owned-record persistence test passed.
+- CI run: https://github.com/bharathgudla20/Java_Learning/actions/runs/39635407530
+- Tested code commit: 544151928429543dfaf1f2449a78f8bfc346df86
 - JavaScript syntax checks passed for app.js, auth.js, and login.js.
-- Real HTTP test against the packaged v2 JAR passed: registration, login, identity,
-  session cookies, CSRF rejection, cross-account read/update/delete denial, private
-  dashboard totals, logout, and account/application persistence across server restart.
-- PostgreSQL migration SQL passed a syntax run using H2 PostgreSQL compatibility mode;
-  this is not a substitute for testing against real PostgreSQL.
+- Real HTTP checks passed for registration, login, session cookies, CSRF protection,
+  account isolation, logout, and account/application persistence across restart.
+- Packaged frontend files and the SQL migration were compared with current source.
 
-Remaining verification depends on provider access: real PostgreSQL migration/JPA checks
-and the public deployment. Docker and an automated browser are not installed locally,
-so a full Docker build and browser interaction test were not run on this computer.
-The deployment status must be checked separately; passing local tests does not mean
-that a public service is already live.
+The local HTTP check used a disposable database under target/accounts-http-test.
+Your original data folder was not uploaded or used by those tests.
 
-The real HTTP test used target/accounts-http-test, not the original data folder.
-Old local database records and the original v1 delivery archive were not uploaded.
+Remaining checks: the actual public deployment and browser interactions.
+Docker was unavailable locally, so a full local Docker build was not run.
+A successful build or GitHub test run does not mean that a public server is already live.
