@@ -75,13 +75,15 @@ the workflow to run. A private repository may have its own Actions usage allowan
 The Java URL should look like:
 
 ```text
-jdbc:postgresql://YOUR-HOST.neon.tech:5432/neondb?sslmode=verify-full
+jdbc:postgresql://YOUR-HOST.neon.tech:5432/neondb?sslmode=verify-full&sslfactory=org.postgresql.ssl.DefaultJavaSSLFactory
 ```
 
 Replace YOUR-HOST and the database name with the real values from Neon. This is a
 template, not an actual database. The leading jdbc:postgresql:// is required;
 a postgresql://user:password@host/database URI is not the same format.
 Use DB_USERNAME and DB_PASSWORD separately. Keep TLS certificate verification enabled.
+The sslfactory setting uses Java's built-in CA trust store, so the container does not
+need a separately installed ~/.postgresql/root.crt file. See https://jdbc.postgresql.org/documentation/ssl/.
 
 ## Step 4: deploy the free Render server
 
@@ -99,7 +101,7 @@ Set these environment variables in Render's environment settings:
 | Name | Value |
 |---|---|
 | SPRING_PROFILES_ACTIVE | prod |
-| DB_URL | Your Neon JDBC URL with sslmode=verify-full |
+| DB_URL | Your Neon JDBC URL with sslmode=verify-full and the Java SSL factory above |
 | DB_USERNAME | Your Neon database username |
 | DB_PASSWORD | Your Neon database password |
 
