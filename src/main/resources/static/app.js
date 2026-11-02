@@ -117,5 +117,21 @@ $('#main-action').onclick=()=>view==='inventory'?openProduct():openOrder();
 $('#show-login').onclick=()=>openAuth();
 $('#start-demo').onclick=async event=>{busy(event.currentTarget);const button=event.currentTarget;try{const user=await api('/auth/demo',{method:'POST'});await enterWorkspace(user);}catch(e){toast(e.message);}finally{busy(button,false);}};
 $('#reset-demo').onclick=()=>confirmAction('A fresh start?','Your demo changes will be replaced with the original sample products and orders.',async()=>{await api('/demo/reset',{method:'POST'});page=0;query='';category='';low=false;toast('Fresh sample data. Ready to explore again.');});
-$('#logout').onclick=async()=>{try{await api('/auth/logout',{method:'POST'});account=null;$('#workspace').hidden=true;$('#welcome').hidden=false;await loadCsrf();}catch(e){showError(e);}};
+async function signOut() {
+  const buttons=$$('[data-sign-out]');buttons.forEach(button=>busy(button));
+  try {
+    // Refresh the session-bound token: an idle tab may still hold an expired one.
+    await loadCsrf();
+    await api('/auth/logout',{method:'POST'});
+    requestSequence++;clearTimeout(searchTimer);
+    account=null;csrf=null;overview=null;catalog=[];orderData=[];cart=[];orderKey='';
+    view='overview';page=0;query='';category='';low=false;orderFilter='ALL';
+    if($('#modal').open)closeModal();
+    $('#modal-body').replaceChildren();$('#view-content').replaceChildren();
+    $('#page-error').hidden=true;$('#workspace').hidden=true;$('#welcome').hidden=false;
+    $('#show-login').focus();toast('You’re signed out. Your saved data stays in your account.');
+  } catch(error) {showError(error);toast('Could not sign out. '+error.message);}
+  finally {buttons.forEach(button=>busy(button,false));}
+}
+$$('[data-sign-out]').forEach(button=>button.onclick=signOut);
 (async()=>{try{await loadCsrf();try{await enterWorkspace(await api('/auth/me'));}catch(e){if(e.status!==401)throw e;}}catch(e){toast(e.message);}})();

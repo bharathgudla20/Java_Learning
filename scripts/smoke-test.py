@@ -69,5 +69,10 @@ a.request("/api/demo/reset", "POST", expect=204)
 assert a.request("/api/overview")["orders"] == 14
 a.request("/api/auth/logout", "POST", expect=204)
 a.request("/api/overview", expect=401)
+# An old tab can retain a token for an invalidated session. Refresh before logout.
+a.request("/api/auth/logout", "POST", expect=403)
+a.csrf = a.request("/api/auth/csrf")
+a.request("/api/auth/logout", "POST", expect=204)
+a.request("/api/auth/me", expect=401)
 b.request("/api/auth/logout", "POST", expect=204)
 print("PASS: health, authentication, CSRF, demo seeding, product creation, order totals, idempotency, isolation, stock restoration, status rules, reset and logout.")
