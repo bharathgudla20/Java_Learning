@@ -1,0 +1,1 @@
+{"version":"0.2.0","configurations":[{"type":"java","name":"Run Stockroom","request":"launch","mainClass":"com.bharath.stockroom.StockroomApplication","projectName":"stockroom"}]}

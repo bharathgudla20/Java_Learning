@@ -1,0 +1,9 @@
+.git
+.vscode
+target
+data
+*.zip
+*.log
+.env*
+docs
+scripts

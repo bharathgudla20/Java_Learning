@@ -1,0 +1,9 @@
+target/
+data/
+.env
+.env.*
+!.env.example
+*.log
+*.zip
+.DS_Store
+.vscode/settings.json
