@@ -2,6 +2,10 @@
 
 A full-stack inventory and order-management application by Bharath Gudla. Java 21 + Spring Boot 4.1.2 + Spring MVC + Spring Data JPA/Hibernate + Spring Security; responsive HTML/CSS/JavaScript frontend served by the same application.
 
+**[Live application](https://bharath-stockroom.onrender.com)** · **[Architecture & API guide](https://bharath-stockroom.onrender.com/guide.html)** · **[Source branch](https://github.com/bharathgudla20/Java_Learning/tree/stockroom)**
+
+Deployment verified on November 2, 2026. See [docs/VERIFICATION.md](docs/VERIFICATION.md) for checks performed and their limits.
+
 ## The problem
 
 A small retailer needs to know what is on hand, place multi-product orders without overselling, and handle cancellations without losing track of inventory. Stockroom puts those operations in one workspace, with a dashboard, searchable inventory, order fulfillment, and an activity log.
