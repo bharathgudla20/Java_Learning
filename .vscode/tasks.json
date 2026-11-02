@@ -2,6 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {"label":"Run Stockroom","type":"shell","command":".\\mvnw.cmd spring-boot:run","problemMatcher":[],"presentation":{"reveal":"always","panel":"dedicated"}},
-    {"label":"Test Stockroom","type":"shell","command":".\\mvnw.cmd test","group":"test","problemMatcher":[]}
+    {"label":"Test Stockroom","type":"shell","command":".\\mvnw.cmd test","group":"test","problemMatcher":[]},
+    {"label":"Run Stockroom (PostgreSQL)","type":"shell","command":".\\scripts\\start-postgres.ps1","problemMatcher":[],"presentation":{"reveal":"always","panel":"dedicated"}}
   ]
 }

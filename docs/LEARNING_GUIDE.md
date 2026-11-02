@@ -54,7 +54,7 @@ Quiz: Authentication vs authorization? Hashing vs encryption? Why BCrypt? Why ro
 
 ## Stage 7 — Deploy and explain tradeoffs
 
-Read the Dockerfile, CI workflow, application profiles and deployment notes. Explain what persists locally, what resets in the hosted demo, and how PostgreSQL could be wired later.
+Read the Dockerfile, CI workflow, application profiles, PostgreSQL migration and deployment notes. Explain why registered workspaces persist in PostgreSQL, why sample demos expire, and why a server restart can require signing in again without deleting business data.
 
 Exercise: add one meaningful regression test, run `verify`, commit it, and observe the deployment. Practice tracing a startup failure from the first meaningful log error.
 
@@ -68,7 +68,7 @@ Quiz: What does a health check prove? Why must a container listen on `0.0.0.0`? 
 4. Place a two-item order; show stock decreases and the new activity.
 5. Cancel it; show stock returns exactly once.
 6. Show the transaction/idempotency code and the concurrent overselling test.
-7. State one limitation honestly: temporary free demo storage, whole-workspace locking, or missing production account recovery.
+7. State one limitation honestly: free-hosting cold starts, whole-workspace locking, or missing production account recovery. Explain the difference between a temporary sample workspace and a registered PostgreSQL workspace.
 
 ## Questions worth rehearsing
 

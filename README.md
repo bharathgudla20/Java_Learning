@@ -4,7 +4,7 @@ A full-stack inventory and order-management application by Bharath Gudla. Java 2
 
 **[Live application](https://bharath-stockroom.onrender.com)** · **[Architecture & API guide](https://bharath-stockroom.onrender.com/guide.html)** · **[Source branch](https://github.com/bharathgudla20/Java_Learning/tree/stockroom)**
 
-Deployment verified on November 2, 2026. See [docs/VERIFICATION.md](docs/VERIFICATION.md) for checks performed and their limits.
+PostgreSQL deployment and restart persistence verified on November 2, 2026. See [docs/POSTGRES_VERIFICATION.md](docs/POSTGRES_VERIFICATION.md) for checks performed and their limits.
 
 ## The problem
 
@@ -31,7 +31,7 @@ Sign-up and sign-in are implemented. The hosted app uses **persistent PostgreSQL
 1. Install JDK 21 and VS Code's Extension Pack for Java.
 2. Open **this folder**, the one containing `pom.xml`.
 3. The included `.vscode/settings.json` points to this laptop's `C:\Program Files\Java\jdk-21.0.11`. Change that path on another machine. No global Java settings are modified.
-4. In a fresh PowerShell terminal:
+4. In a fresh PowerShell terminal (local H2 storage):
 
 ```powershell
 ./mvnw.cmd spring-boot:run
@@ -70,7 +70,7 @@ Spring Data repositories             ← owner-scoped queries and database locks
 Hibernate → H2 (local/demo) or configured PostgreSQL
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for concurrency, tradeoffs, data model, and security decisions. Read [docs/LEARNING_GUIDE.md](docs/LEARNING_GUIDE.md) to learn the code in small steps. The app also serves `/guide.html` and an OpenAPI description at `/api-docs.json`.
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for concurrency, tradeoffs, data model, and security decisions. Read [docs/POSTGRES.md](docs/POSTGRES.md) for persistent storage and local PostgreSQL startup, and [docs/LEARNING_GUIDE.md](docs/LEARNING_GUIDE.md) to learn the code in small steps. The app also serves `/guide.html` and an OpenAPI description at `/api-docs.json`.
 
 ## Deployment
 

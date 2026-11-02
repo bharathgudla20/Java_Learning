@@ -1,5 +1,7 @@
 # Verification — November 2, 2026
 
+**Historical initial H2 release. The hosted application has since been upgraded to persistent PostgreSQL. See [POSTGRES_VERIFICATION.md](POSTGRES_VERIFICATION.md) for the current configuration and restart-persistence results.**
+
 ## Deployment
 
 - Public URL: https://bharath-stockroom.onrender.com
