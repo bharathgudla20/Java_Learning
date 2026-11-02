@@ -73,9 +73,9 @@ Only PLACED orders can become CANCELLED. The service holds the same owner lock, 
 
 ## Storage and deployment tradeoffs
 
-Local H2 file storage persists between local restarts. The free live demo uses H2 in memory because free Render filesystem storage is ephemeral and its free PostgreSQL expires. This avoids a resume demo silently failing after a database expiry, but intentionally resets all data on server restart. The UI and README disclose it. PostgreSQL is configurable but has not been tested in this delivery unless the verification report explicitly says so.
+Local H2 file storage persists between local restarts. The hosted service uses a dedicated PostgreSQL 17 project on Neon. Registered workspaces survive application restarts. Sample workspaces are still removed after two hours by design. HTTP sessions remain in application memory, so a server restart can require a new login.
 
-Hibernate schema generation keeps setup beginner friendly. A real production release needs versioned migrations, backups, account recovery, privacy/retention policy, and durable database provisioning. CI uses H2; a PostgreSQL Testcontainers test suite is a useful next milestone.
+The postgres profile requires credentials, enables Flyway migrations through a direct connection, and uses Hibernate schema validation. Normal application queries use a pooled PostgreSQL connection with a small Hikari pool. Migration V1 creates the tables, constraints and indexes in source control. An expiring schema-only Neon branch isolates the PostgreSQL integration tests from live data. The H2 demo profile is retained for disposable offline demonstrations only.
 
 ## Why one deployable app?
 

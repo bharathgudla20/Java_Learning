@@ -14,7 +14,7 @@ A small retailer needs to know what is on hand, place multi-product orders witho
 
 Open the application and select **Explore live demo**. A new isolated workspace is created with 12 sample products and 14 example orders. Each visitor owns a different dataset; changing your demo does not change another visitor's inventory. Demo workspaces expire after two hours and are cleaned up periodically. The browser session expires after one hour of inactivity.
 
-Sign-up and sign-in are also implemented. In the hosted free demo, **all data, including accounts, resets on server restart**. Use sample information. The banner in the app explains this. Local development uses a persistent H2 file database. An external PostgreSQL datasource can be configured with environment variables.
+Sign-up and sign-in are implemented. The hosted app uses **persistent PostgreSQL 17 on Neon**. Registered accounts, products, and orders survive application restarts. Sample demo workspaces still expire after two hours; use a registered account for lasting data. Browser sessions are held by the application, so a restart may require signing in again. Local development defaults to an H2 file database, or you can select the PostgreSQL profile.
 
 ## What works
 
@@ -50,7 +50,7 @@ On macOS/Linux, run `sh mvnw spring-boot:run` with JDK 21.
 java -jar target/stockroom-1.0.0.jar
 ```
 
-The integration suite checks real JPA transactions, simultaneous order placement, duplicate requests, stock rollback, cancellation, tenant isolation, authentication, CSRF, validation, password hashing, search, archival and demo reset. It runs on H2. PostgreSQL behavior is **not** claimed to be integration-tested by this suite.
+The integration suite checks real JPA transactions, simultaneous order placement, duplicate requests, stock rollback, cancellation, tenant isolation, authentication, CSRF, validation, password hashing, search, archival and demo reset. It runs on H2 by default and can target an isolated real PostgreSQL test database through TEST_DATABASE_URL, TEST_DB_USER, TEST_DB_PASSWORD, TEST_DDL_MODE=validate and TEST_FLYWAY=true. Never point the tests at the live application database.
 
 The Dockerfile runs `mvn verify` before packaging, uses a separate JRE image, runs as a non-root user, and starts Java directly so shutdown signals reach it.
 
@@ -74,17 +74,23 @@ Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for concurrency, tradeoffs, da
 
 ## Deployment
 
-The free portfolio service uses `SPRING_PROFILES_ACTIVE=demo`, giving each visitor a temporary, seeded workspace. No payment service or email provider is used. This is an interactive portfolio demonstration, not a production retailer's system.
+The free portfolio service uses `SPRING_PROFILES_ACTIVE=postgres`, with a separate Neon PostgreSQL project in Singapore. A registered workspace is persistent; a sample demo workspace is intentionally temporary. No payment service or email provider is used.
 
 Deploy as one Docker web service, using the repository root as the Docker context. Set:
 
 ```text
-SPRING_PROFILES_ACTIVE=demo
+SPRING_PROFILES_ACTIVE=postgres
+JDBC_DATABASE_URL=jdbc:postgresql://YOUR_POOLED_HOST:5432/stockroom?sslmode=require
+MIGRATION_DATABASE_URL=jdbc:postgresql://YOUR_DIRECT_HOST:5432/stockroom?sslmode=require
+DB_USER=your_database_role
+DB_PASSWORD=your_secret_password
 ```
 
-Render supplies `PORT`; the app binds to `0.0.0.0`. Configure HTTP health checks at `/actuator/health`. Keep HTTPS enabled; the demo profile marks session cookies Secure. A free Render instance sleeps after inactivity, so the first visit may take about a minute. Hosting limits can change; consult the current provider documentation.
+Render supplies `PORT`; the app binds to `0.0.0.0`. The `/actuator/health` endpoint includes database health. Keep HTTPS enabled; the PostgreSQL profile marks session cookies Secure. Free hosting has cold starts and usage quotas, but application restarts do not erase PostgreSQL data.
 
-To use persistent PostgreSQL instead of the demo profile, **do not set the demo profile**. Set `JDBC_DATABASE_URL` to a JDBC PostgreSQL URL, plus `DB_USER` and `DB_PASSWORD`; set secure cookies for HTTPS and `EPHEMERAL_DEMO=false`. Secrets belong in the deployment dashboard, not source control. Before supporting real customer data, add managed schema migrations, backups, password reset/email verification, stronger abuse protection, and PostgreSQL-specific integration tests. Current schema management uses Hibernate `update` for learning convenience.
+Secrets belong in the deployment dashboard, not source control. Flyway applies versioned PostgreSQL migrations from `src/main/resources/db/migration/postgres`; Hibernate validates the schema instead of modifying it. Migration traffic uses the direct connection; application traffic uses the pooled connection. The PostgreSQL profile requires explicit database configuration and never falls back to H2. For local PostgreSQL startup, create a Git-ignored `.env.postgres` and run `./scripts/start-postgres.ps1`. This sets non-secure cookies only for local HTTP. The legacy `demo` profile remains available for disposable H2 demonstrations; it is not used by the hosted service.
+
+Before supporting real customer data, add backups, password reset/email verification, stronger abuse protection, and a production operations policy. Free Neon storage remains subject to its account quotas.
 
 ## Useful resume wording
 

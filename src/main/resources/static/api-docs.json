@@ -3,7 +3,7 @@
   "info": {
     "title": "Stockroom API",
     "version": "1.0.0",
-    "description": "Java Spring Boot portfolio project by Bharath Gudla. Same-origin session authentication and CSRF protection. Temporary demo data resets on hosted server restart. INR prices, UTC trend dates."
+    "description": "Java Spring Boot portfolio project by Bharath Gudla. Same-origin session authentication and CSRF protection. Registered workspaces persist in PostgreSQL; sample demos expire after two hours. INR prices, UTC trend dates."
   },
   "servers": [
     {

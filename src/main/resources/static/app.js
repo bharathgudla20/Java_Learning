@@ -39,6 +39,7 @@ async function enterWorkspace(user) {
   $('#user-avatar').textContent=user.name[0].toUpperCase();$('#mode-label').textContent=user.demo?'Live demo':'Your workspace';
   $('#reset-demo').hidden=!user.demo;$('#demo-description').textContent=user.demo?'Try an order. Adjust your stock. Every change is yours.':'Your products, your orders, your own workspace.';
   $('#ephemeral-notice').hidden=!user.ephemeral;
+  $('#demo-retention-notice').hidden=!user.demo;
   await navigate('overview');
 }
 async function refreshCounts(){overview=await api('/overview');$('#inventory-count').textContent=overview.activeProducts;$('#orders-count').textContent=overview.pendingOrders;}
